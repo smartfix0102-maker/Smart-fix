@@ -1,7 +1,20 @@
 [
   {
-    "name": "Adithyan.",
+    "name": "Adithyan G",
     "rating": 5,
-    "review": "Excellent repair service. My Phone screen was fixed within one hour and looks brand new."
+    "review": "Best mobile shop in the area! Genuine accessories, skilled technician, and excellent customer support. I highly recommend this shop to anyone .",
+    "profileImage": "https://lh3.googleusercontent.com/a-/ALV-UjUHuvyFEmPte63WCfR3PkmGNeQXiFfrg35KeA0mY8B7U77GgZsK=w108-h108-p-rp-mo-ba12-br100"
+  },
+  {
+    "name": "Aslam R",
+    "rating": 5,
+    "review": "Excellent mobile service! They diagnosed and repaired my phone quickly at a reasonable price. Friendly staff and genuine service. Highly recommended!",
+    "profileImage": "https://lh3.googleusercontent.com/a-/ALV-UjXNuy3BqBMPAuHapJlbdIHFN6RdLrB4QWGgS4hiI5mDzn9D9C9n=w108-h108-p-rp-mo-ba12-br100"
+  },
+  {
+    "name": "Anandhu Mahadev M K",
+    "rating": 5,
+    "review": "Fast, reliable, and professional. My phone was repaired within a short time and works perfectly now. Great customer service!",
+    "profileImage": "https://lh3.googleusercontent.com/a-/ALV-UjX7mSWQ5KvXSohA9ymN_aIxK6kmd9d3pMkGjQqNJdOPrXmikRvD=w108-h108-p-rp-mo-ba12-br100"
   }
 ]

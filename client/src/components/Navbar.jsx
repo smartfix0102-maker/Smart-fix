@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Menu, X, Smartphone, Wrench } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Sun, Moon, Menu, X, Wrench } from 'lucide-react';
 
 export default function Navbar() {
   const [theme, setTheme] = useState(() => {
@@ -122,13 +122,12 @@ export default function Navbar() {
           {/* Call-to-action */}
           <a 
             href="#contact" 
-            className="btn-primary" 
+            className="btn-primary desktop-btn" 
             style={{ 
               padding: '10px 22px', 
               fontSize: '14px',
               display: 'none'
             }}
-            className="desktop-btn"
           >
             Book Now
           </a>

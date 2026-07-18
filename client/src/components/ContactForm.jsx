@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { Send, MessageCircle, CheckCircle2 } from 'lucide-react';
 
@@ -110,7 +110,7 @@ export default function ContactForm() {
       </p>
 
       <div style={{ maxWidth: '650px', margin: '0 auto' }}>
-        <div className="neumorphic-card" style={{ padding: '40px' }}>
+        <div className="neumorphic-card contact-form-card" style={{ padding: '40px' }}>
           
           {submitted ? (
             <div style={{
@@ -132,7 +132,7 @@ export default function ContactForm() {
             </div>
           ) : (
             <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-              <input type="hidden" name="to_email" value="adithyang24@gmail.com" />
+              <input type="hidden" name="to_email" value="aslamrasheed234@gmail.com" />
 
               {/* Form Input: Name */}
               <div className="input-group" style={{ position: 'relative', textAlign: 'left' }}>
@@ -355,6 +355,9 @@ export default function ContactForm() {
         }
 
         @media (max-width: 768px) {
+          .contact-form-card {
+            padding: 20px !important;
+          }
           .form-row, .button-group {
             grid-template-columns: 1fr !important;
             gap: 20px !important;

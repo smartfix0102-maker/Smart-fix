@@ -1,4 +1,3 @@
-import React from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 export default function StoreLocation() {
@@ -30,7 +29,7 @@ export default function StoreLocation() {
       {/* Title */}
       <h2 className="section-title">Visit Our Store</h2>
       <p className="section-subtitle">
-        Located in the heart of Silicon Valley. Stop by for diagnostics or pick up premium accessories.
+        Located at Sasthamcotta, Kollam, Kerala. Stop by for diagnostics or explore our high-performance smartphone collections.
       </p>
 
       {/* Side by side layout */}

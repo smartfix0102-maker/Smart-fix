@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -41,6 +41,7 @@ export default function DisassemblyCanvas() {
   useEffect(() => {
     if (!imagesLoaded) return;
 
+    const container = containerRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     
@@ -77,51 +78,62 @@ export default function DisassemblyCanvas() {
       snap: 'frame',
       ease: 'none',
       scrollTrigger: {
-        trigger: containerRef.current,
+        trigger: container,
         start: 'top top',
         end: 'bottom bottom',
         scrub: 0.5,
         pin: '.disassembly-sticky-wrapper',
-        onUpdate: (self) => {
-          renderFrame(Math.round(frameObj.frame));
-        }
+          onUpdate: () => {
+            renderFrame(Math.round(frameObj.frame));
+          }
       }
     });
 
-    // 3. Animate overlay text labels at specific scroll intervals
-    const setupLabelAnim = (selector, startPercent, endPercent) => {
-      gsap.fromTo(selector, 
-        { opacity: 0, y: 30, scale: 0.9 },
-        {
-          opacity: 1, 
-          y: 0, 
-          scale: 1,
-          duration: 0.4,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: `top+=${startPercent}% top`,
-            end: `top+=${endPercent}% top`,
-            scrub: true,
-            toggleActions: 'play reverse play reverse'
-          }
-        }
-      );
-    };
+    // 3. Animate overlay text labels in a single synchronized timeline
+    const labelsTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.5
+      }
+    });
 
-    // Timeline overlays (percentage of 500vh height)
-    setupLabelAnim('.label-intro', 0, 10);
-    setupLabelAnim('.label-back', 15, 28);
-    setupLabelAnim('.label-battery', 30, 43);
-    setupLabelAnim('.label-camera', 45, 58);
-    setupLabelAnim('.label-cpu', 60, 73);
-    setupLabelAnim('.label-speakers', 75, 88);
-    setupLabelAnim('.label-re-assembly', 90, 100);
+    // Set initial state for all labels
+    labelsTl.set('.spec-card', { opacity: 0, y: 30, scale: 0.9 });
+
+    // Label 1: Intro
+    labelsTl.to('.label-intro', { opacity: 1, y: 0, scale: 1, duration: 3 }, 0);
+    labelsTl.to('.label-intro', { opacity: 0, y: -30, scale: 0.9, duration: 3 }, 8);
+
+    // Label 2: Back panel
+    labelsTl.to('.label-back', { opacity: 1, y: 0, scale: 1, duration: 3 }, 15);
+    labelsTl.to('.label-back', { opacity: 0, y: -30, scale: 0.9, duration: 3 }, 24);
+
+    // Label 3: Battery
+    labelsTl.to('.label-battery', { opacity: 1, y: 0, scale: 1, duration: 3 }, 30);
+    labelsTl.to('.label-battery', { opacity: 0, y: -30, scale: 0.9, duration: 3 }, 39);
+
+    // Label 4: Camera
+    labelsTl.to('.label-camera', { opacity: 1, y: 0, scale: 1, duration: 3 }, 45);
+    labelsTl.to('.label-camera', { opacity: 0, y: -30, scale: 0.9, duration: 3 }, 54);
+
+    // Label 5: Logic Board
+    labelsTl.to('.label-cpu', { opacity: 1, y: 0, scale: 1, duration: 3 }, 60);
+    labelsTl.to('.label-cpu', { opacity: 0, y: -30, scale: 0.9, duration: 3 }, 69);
+
+    // Label 6: Audio Engine
+    labelsTl.to('.label-speakers', { opacity: 1, y: 0, scale: 1, duration: 3 }, 75);
+    labelsTl.to('.label-speakers', { opacity: 0, y: -30, scale: 0.9, duration: 3 }, 84);
+
+    // Label 7: Reassembly
+    labelsTl.to('.label-re-assembly', { opacity: 1, y: 0, scale: 1, duration: 3 }, 90);
 
     // Clean up
     return () => {
       anim.scrollTrigger.kill();
       ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger === containerRef.current) t.kill();
+        if (t.trigger === container) t.kill();
       });
     };
   }, [imagesLoaded]);
@@ -235,49 +247,88 @@ export default function DisassemblyCanvas() {
           <div className="label-intro spec-card" style={{ top: '5%', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
             <span className="spec-badge">EXPLORE HARDWARE</span>
             <h2 className="spec-title">Hardware Architecture</h2>
-            <p className="spec-desc">Scroll down to disassemble the device piece-by-piece and explore certified repair standards.</p>
+            <p className="spec-desc">
+              <span className="desktop-text">Scroll down to disassemble the device piece-by-piece and explore certified repair standards.</span>
+              <span className="mobile-text">Scroll down to disassemble the device and view our repair standards.</span>
+            </p>
           </div>
 
           {/* Label 2: Back Cover */}
           <div className="label-back spec-card" style={{ top: '10%', left: '5%' }}>
             <span className="spec-badge">STEP 01 // BODY</span>
-            <h2 className="spec-title">Premium Glass Back</h2>
-            <p className="spec-desc">Thermally fused shatter-resistant rear panel. We replace with exact OEM glass for perfect seal integrity.</p>
+            <h2 className="spec-title">
+              <span className="desktop-text">Premium Glass Back</span>
+              <span className="mobile-text">Glass Back</span>
+            </h2>
+            <p className="spec-desc">
+              <span className="desktop-text">Thermally fused shatter-resistant rear panel. We replace with exact OEM glass for perfect seal integrity.</span>
+              <span className="mobile-text">Shatter-resistant OEM glass. Restores perfect seal integrity.</span>
+            </p>
           </div>
 
           {/* Label 3: Battery */}
           <div className="label-battery spec-card" style={{ bottom: '20%', right: '10%' }}>
             <span className="spec-badge">STEP 02 // POWER</span>
-            <h2 className="spec-title">Li-Ion Battery Cell</h2>
-            <p className="spec-desc">High density 4323 mAh battery. Recalibrated on-board controller chip ensuring optimal charging speed & safety.</p>
+            <h2 className="spec-title">
+              <span className="desktop-text">Li-Ion Battery Cell</span>
+              <span className="mobile-text">Battery Cell</span>
+            </h2>
+            <p className="spec-desc">
+              <span className="desktop-text">High density 4323 mAh battery. Recalibrated on-board controller chip ensuring optimal charging speed & safety.</span>
+              <span className="mobile-text">High density 4323 mAh cell. Recalibrated for safety.</span>
+            </p>
           </div>
 
           {/* Label 4: Camera */}
           <div className="label-camera spec-card" style={{ top: '10%', right: '5%' }}>
             <span className="spec-badge">STEP 03 // OPTICS</span>
-            <h2 className="spec-title">Pro Triple Camera</h2>
-            <p className="spec-desc">Optical Image Stabilization (OIS) & laser autofocus sensor. Clean room environment calibration prevents dust spots.</p>
+            <h2 className="spec-title">
+              <span className="desktop-text">Pro Triple Camera</span>
+              <span className="mobile-text">Pro Camera</span>
+            </h2>
+            <p className="spec-desc">
+              <span className="desktop-text">Optical Image Stabilization (OIS) & laser autofocus sensor. Clean room environment calibration prevents dust spots.</span>
+              <span className="mobile-text">Pro camera with OIS. Calibrated in dust-free room.</span>
+            </p>
           </div>
 
           {/* Label 5: Motherboard */}
           <div className="label-cpu spec-card" style={{ top: '50%', left: '5%' }}>
             <span className="spec-badge">STEP 04 // COMPUTE</span>
-            <h2 className="spec-title">A16 Logic Board</h2>
-            <p className="spec-desc">Micro-welded multilayer PCB. Diagnostic inspection tests 18 thermal contact pathways before final enclosure.</p>
+            <h2 className="spec-title">
+              <span className="desktop-text">A16 Logic Board</span>
+              <span className="mobile-text">Logic Board</span>
+            </h2>
+            <p className="spec-desc">
+              <span className="desktop-text">Micro-welded multilayer PCB. Diagnostic inspection tests 18 thermal contact pathways before final enclosure.</span>
+              <span className="mobile-text">Micro-welded PCB. Tested for 18 thermal pathways.</span>
+            </p>
           </div>
 
           {/* Label 6: Speakers / Audio */}
           <div className="label-speakers spec-card" style={{ bottom: '10%', left: '40%' }}>
             <span className="spec-badge">STEP 05 // ACOUSTICS</span>
-            <h2 className="spec-title">Stereo Audio Engine</h2>
-            <p className="spec-desc">Dustproof mesh membranes, active sub-woofers, and pressure-balanced vents. Re-certified for IP68 dust-ingress protection.</p>
+            <h2 className="spec-title">
+              <span className="desktop-text">Stereo Audio Engine</span>
+              <span className="mobile-text">Audio Engine</span>
+            </h2>
+            <p className="spec-desc">
+              <span className="desktop-text">Dustproof mesh membranes, active sub-woofers, and pressure-balanced vents. Re-certified for IP68 dust-ingress protection.</span>
+              <span className="mobile-text">Stereo speakers. Re-certified for IP68 protection.</span>
+            </p>
           </div>
 
           {/* Label 7: Complete Re-assembly */}
           <div className="label-re-assembly spec-card" style={{ bottom: '15%', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
             <span className="spec-badge">STEP 06 // READY</span>
-            <h2 className="spec-title">Certified Reassembly</h2>
-            <p className="spec-desc">All parts aligned, torque-calibrated screws driven, and liquid adhesive cure tested. Ready for delivery.</p>
+            <h2 className="spec-title">
+              <span className="desktop-text">Certified Reassembly</span>
+              <span className="mobile-text">Reassembly</span>
+            </h2>
+            <p className="spec-desc">
+              <span className="desktop-text">All parts aligned, torque-calibrated screws driven, and liquid adhesive cure tested. Ready for delivery.</span>
+              <span className="mobile-text">Torque-calibrated and liquid adhesive tested. Ready.</span>
+            </p>
           </div>
 
         </div>
@@ -322,35 +373,69 @@ export default function DisassemblyCanvas() {
           line-height: 1.5;
           margin: 0;
         }
+        
+        /* Desktop/Mobile text visibility toggle */
+        .mobile-text {
+          display: none;
+        }
+        .desktop-text {
+          display: inline;
+        }
+
         @media (max-width: 768px) {
+          .mobile-text {
+            display: inline;
+          }
+          .desktop-text {
+            display: none;
+          }
+
           .spec-card {
-            max-width: 195px !important;
-            padding: 10px 14px !important;
-            border-radius: 12px !important;
+            position: absolute !important;
+            left: 5% !important;
+            right: 5% !important;
+            width: 90% !important;
+            max-width: none !important;
+            bottom: 40px !important;
+            top: auto !important;
+            padding: 16px 20px !important;
+            border-radius: 16px !important;
+            background: rgba(4, 7, 24, 0.85) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(59, 82, 255, 0.3) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+            text-align: center !important;
           }
           
-          /* Pull side cards closer to edges on mobile to maximize center space */
-          .spec-card[style*="left: 10%"] {
-            left: 3% !important;
-          }
-          .spec-card[style*="right: 10%"] {
-            right: 3% !important;
-          }
-          .spec-card[style*="left: 50%"] {
-            left: 50% !important;
+          /* Override specific offsets to force stack on bottom center */
+          .label-intro,
+          .label-back,
+          .label-camera,
+          .label-cpu,
+          .label-battery,
+          .label-speakers,
+          .label-re-assembly {
+            top: auto !important;
+            bottom: 40px !important;
+            left: 5% !important;
+            right: 5% !important;
+            text-align: center !important;
           }
 
           .spec-badge {
-            font-size: 9px !important;
-            margin-bottom: 4px !important;
+            font-size: 10px !important;
+            margin-bottom: 6px !important;
+            letter-spacing: 1.2px !important;
           }
           .spec-title {
-            font-size: 13px !important;
-            margin-bottom: 4px !important;
+            font-size: 16px !important;
+            margin-bottom: 6px !important;
+            font-weight: 700 !important;
           }
           .spec-desc {
-            font-size: 11px !important;
-            line-height: 1.35 !important;
+            font-size: 12px !important;
+            line-height: 1.4 !important;
           }
         }
       `}</style>

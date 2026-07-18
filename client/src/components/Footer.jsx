@@ -1,9 +1,7 @@
-import React from 'react';
 import { 
   Wrench, 
   Smartphone, 
-  Mail, 
-  Phone,
+  Mail,
   
 } from 'lucide-react';
 
@@ -55,9 +53,8 @@ export default function Footer({ currentPage }) {
       </div>
 
       {/* Main Footer Content */}
-      <div style={{
+      <div className="footer-content" style={{
         background: 'var(--bg-sec)',
-        padding: '60px 5% 40px',
         color: 'var(--text-main)'
       }}>
         <div 
@@ -202,7 +199,7 @@ export default function Footer({ currentPage }) {
         </div>
 
         {/* Divider & Copyright */}
-        <div style={{
+        <div className="footer-bottom" style={{
           maxWidth: '1400px',
           margin: '40px auto 0',
           borderTop: '1px solid var(--border-color)',
@@ -223,6 +220,9 @@ export default function Footer({ currentPage }) {
       </div>
 
       <style>{`
+        .footer-content {
+          padding: 60px 5% 40px;
+        }
         .parallax-waves > use {
           animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
         }
@@ -246,9 +246,22 @@ export default function Footer({ currentPage }) {
           0% { transform: translate3d(-90px,0,0); }
           100% { transform: translate3d(85px,0,0); }
         }
-        @media (max-width: 576px) {
+        @media (max-width: 767px) {
+          .footer-content {
+            padding: 40px 24px 30px !important;
+          }
           .footer-grid {
             grid-template-columns: 1fr !important;
+            gap: 30px !important;
+          }
+          .footer-bottom {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 15px !important;
+          }
+          .footer-bottom > div {
+            margin-top: 0 !important;
+            justify-content: center !important;
           }
         }
       `}</style>

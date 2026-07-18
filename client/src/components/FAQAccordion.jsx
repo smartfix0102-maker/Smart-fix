@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import faqsData from '../data/faqs.json';
 
@@ -42,6 +42,7 @@ export default function FAQAccordion() {
             >
               {/* Question Header */}
               <button
+                className="faq-btn"
                 onClick={() => toggleFAQ(index)}
                 style={{
                   width: '100%',
@@ -99,6 +100,21 @@ export default function FAQAccordion() {
           );
         })}
       </div>
+      
+      <style>{`
+        @media (max-width: 768px) {
+          .faq-btn {
+            padding: 16px 20px !important;
+          }
+          .faq-btn span:first-child {
+            font-size: 14px !important;
+          }
+          .accordion-content {
+            padding: 0 20px 16px !important;
+            font-size: 13px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

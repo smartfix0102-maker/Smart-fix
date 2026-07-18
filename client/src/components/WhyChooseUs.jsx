@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { 
   Wrench, 
-  History, 
   Zap, 
   ShieldCheck, 
-  Smile, 
-  Users 
+  Smile
 } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -57,7 +55,7 @@ const STATS_DATA = [
   // }
 ];
 
-function StatCard({ stat, index }) {
+function StatCard({ stat }) {
   const [currentVal, setCurrentVal] = useState(0);
   const cardRef = useRef(null);
 
@@ -114,6 +112,7 @@ function StatCard({ stat, index }) {
 
       {/* Numeric value */}
       <div 
+        className="stat-value"
         style={{
           fontFamily: 'var(--font-poppins)',
           fontSize: '32px',
@@ -160,34 +159,43 @@ export default function WhyChooseUs() {
           width: '100%'
         }}
       >
-        {STATS_DATA.map((stat, idx) => (
-          <StatCard key={idx} stat={stat} index={idx} />
+        {STATS_DATA.map((stat) => (
+          <StatCard key={stat.title} stat={stat} />
         ))}
       </div>
 
       <style>{`
         @media (max-width: 768px) {
           .stats-grid {
-            display: flex !important;
-            flex-direction: row !important;
-            overflow-x: auto !important;
-            scroll-snap-type: x mandatory !important;
-            gap: 20px !important;
-            padding: 20px !important;
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 15px !important;
+            padding: 10px 0 !important;
             width: 100% !important;
-            -ms-overflow-style: none; /* IE/Edge */
-            scrollbar-width: none; /* Firefox */
-          }
-          
-          .stats-grid::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
           }
           
           .stat-card {
-            min-width: 200px !important;
-            flex-shrink: 0 !important;
-            scroll-snap-align: center !important;
-            padding: 20px !important;
+            padding: 20px 10px !important;
+            border-radius: 20px !important;
+            gap: 10px !important;
+          }
+
+          .stat-card div:first-child {
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 12px !important;
+          }
+          .stat-card div:first-child svg {
+            width: 20px !important;
+            height: 20px !important;
+          }
+
+          .stat-value {
+            font-size: 24px !important;
+          }
+
+          .stat-card span {
+            font-size: 12px !important;
           }
         }
       `}</style>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import FeaturedBrands from './components/FeaturedBrands';
@@ -6,9 +6,9 @@ import Services from './components/Services';
 import DisassemblyCanvas from './components/DisassemblyCanvas';
 import RepairTimeline from './components/RepairTimeline';
 import WhyChooseUs from './components/WhyChooseUs';
-import Testimonials from './components/Testimonials';
 import StoreLocation from './components/StoreLocation';
 import ContactForm from './components/ContactForm';
+import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import FAQPage from './pages/FAQPage';
 import TermsPage from './pages/TermsPage';
@@ -80,7 +80,7 @@ export default function App() {
           <WhyChooseUs />
 
           {/* Testimonials Marquee */}
-          {/* <Testimonials /> */}
+          <Testimonials />
 
           {/* Location Details and Google Map */}
           <StoreLocation />

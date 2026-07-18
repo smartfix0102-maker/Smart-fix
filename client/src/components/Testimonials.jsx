@@ -1,4 +1,3 @@
-import React from 'react';
 import { Star } from 'lucide-react';
 import testimonialsData from '../data/testimonials.json';
 
@@ -25,7 +24,7 @@ export default function Testimonials() {
             return (
               <div 
                 key={`${item.name}-${index}`}
-                className="glass-card"
+                className="glass-card testimonial-card"
                 style={{
                   flexShrink: 0,
                   width: '350px',
@@ -53,7 +52,43 @@ export default function Testimonials() {
                 {/* Header Profile */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   {/* Avatar */}
-                  <div style={{
+                  <div
+                    style={{
+                      width: '45px',
+                      height: '45px',
+                      borderRadius: '50%',
+                      overflow: 'hidden',
+                      background: 'linear-gradient(135deg, var(--accent) 0%, #3b52ff 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontFamily: 'var(--font-poppins)',
+                      fontWeight: 700,
+                      fontSize: '16px',
+                      flexShrink: 0
+                    }}
+                  >
+                    {item.profileImage ? (
+                      <img
+                        src={item.profileImage}
+                        alt={item.name}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          // Show initial if image fails to load
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.parentElement.innerHTML = initial;
+                        }}
+                      />
+                    ) : (
+                      initial
+                    )}
+                  </div>
+                  {/* <div style={{
                     width: '45px',
                     height: '45px',
                     borderRadius: '50%',
@@ -67,7 +102,7 @@ export default function Testimonials() {
                     fontSize: '16px'
                   }}>
                     {initial}
-                  </div>
+                  </div> */}
                   {/* Name and Platform */}
                   <div style={{ textAlign: 'left' }}>
                     <div style={{ fontFamily: 'var(--font-poppins)', fontWeight: 700, fontSize: '15px', color: 'var(--text-main)' }}>
@@ -102,6 +137,16 @@ export default function Testimonials() {
           })}
         </div>
       </div>
+      
+      <style>{`
+        @media (max-width: 576px) {
+          .testimonial-card {
+            width: 280px !important;
+            padding: 15px !important;
+            gap: 10px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

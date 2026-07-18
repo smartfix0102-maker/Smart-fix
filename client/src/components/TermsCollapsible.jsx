@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Shield, HelpCircle, FileText, RefreshCw, Lock } from 'lucide-react';
 import termsData from '../data/terms.json';
 import gsap from 'gsap';
@@ -47,7 +47,7 @@ export default function TermsCollapsible() {
         className="terms-grid"
       >
         {/* Navigation Sidebar */}
-        <div style={{
+        <div className="terms-sidebar" style={{
           display: 'flex',
           flexDirection: 'column',
           gap: '12px'
@@ -153,6 +153,33 @@ export default function TermsCollapsible() {
         @media (min-width: 768px) {
           .terms-grid {
             grid-template-columns: 0.8fr 1.2fr !important;
+          }
+        }
+        @media (max-width: 767px) {
+          .terms-sidebar {
+            flex-direction: row !important;
+            overflow-x: auto !important;
+            white-space: nowrap !important;
+            padding: 5px 2px 15px !important;
+            width: 100% !important;
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+          }
+          .terms-sidebar::-webkit-scrollbar {
+            display: none !important;
+          }
+          .terms-sidebar button {
+            padding: 10px 16px !important;
+            font-size: 13px !important;
+            border-radius: 12px !important;
+            gap: 8px !important;
+            flex-shrink: 0 !important;
+            text-align: center !important;
+            justify-content: center !important;
+          }
+          .terms-content-panel {
+            padding: 24px 20px !important;
+            min-height: 200px !important;
           }
         }
       `}</style>

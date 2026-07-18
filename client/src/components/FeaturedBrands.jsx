@@ -1,4 +1,3 @@
-import React from 'react';
 import appleLogo from '../assets/logos/apple.webp';
 import samsungLogo from '../assets/logos/samsung.webp';
 import miLogo from '../assets/logos/mi.webp';
@@ -93,4 +92,3 @@ export default function FeaturedBrands() {
     </section>
   );
 }
-

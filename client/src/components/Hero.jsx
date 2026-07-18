@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ShieldCheck, Award, Clock, ArrowRight, ArrowDown } from 'lucide-react';
 import gsap from 'gsap';
-import heroImg from '../assets/hero.png';
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -406,6 +405,21 @@ export default function Hero() {
         @media (min-width: 992px) {
           .hero-grid {
             grid-template-columns: 1.2fr 0.8fr !important;
+          }
+        }
+        @media (max-width: 576px) {
+          .hero-ctas {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            width: 100%;
+          }
+          .hero-ctas a {
+            width: 100% !important;
+            justify-content: center;
+            padding: 14px 20px !important;
+            font-size: 15px !important;
+            text-align: center;
           }
         }
       `}</style>
